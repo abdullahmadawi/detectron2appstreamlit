@@ -4,34 +4,15 @@ Import libraries
 ###########################################################################
 '''
 #	Import some common libraries
-from collections import OrderedDict, deque
-import logging
-import argparse, glob, tempfile, warnings, tqdm, atexit, bisect
+import os, sys, json, cv2, shutil, datetime, time
+import numpy as np; import pandas as pd; import geopandas as gpd
+import matplotlib.image as mpimg
 
-import os, sys, json, cv2, random, shutil, datetime, errno, fiona, timeit, time, statistics
-import numpy as np; import pandas as pd; import geopandas as gpd; import multiprocessing as mp
-import matplotlib.image as mpimg; import matplotlib.pyplot as plt; import matplotlib.patches as patches
-import shapely.geometry
 
-from PIL import Image
 from pathlib import Path
-# from pandas.io.json import json_normalize #	SOON TO BE DEPRECATED
 from pandas import json_normalize
-from pandas import DataFrame
 from shapely.geometry import Polygon, Point
-from datetime import datetime, date
 from copy import deepcopy
-
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
-
-print('abspath',abspath)
-print('dname',dname)
-
-#	torch and tensorflow-gpu require gpu to be utilised
-import torch, torchvision
-# import tensorflow as tf
 
 #	Setup detectron2 logger
 import detectron2
@@ -63,15 +44,6 @@ from detectron2.modeling import DatasetMapperTTA, GeneralizedRCNNWithTTA
 import detectron2.data.transforms as T
 
 from detectron2.export.flatten import TracingAdapter
-
-# sys.path.insert(0, './demo')
-# print('demo path', sys.path.insert(0, './demo'))
-
-#	Import IMGAUG library
-import imageio
-import imgaug as ia
-from imgaug.augmentables.bbs import BoundingBox, BoundingBoxesOnImage
-import imgaug.augmenters as iaa
 
 #	Import pandarallel for parallelising process across multiple CPU cores
 from pandarallel import pandarallel
@@ -745,7 +717,7 @@ class Detector:
 		self.cfg.merge_from_file(model_zoo.get_config_file(pretrained_model))
 		self.cfg.MODEL.WEIGHTS = os.path.join(self.cfg.OUTPUT_DIR, "tree_detection_small.yaml")
 		self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
-		self.cfg.MODEL.DEVOCE = "cpu"
+		self.cfg.MODEL.DEVICE = "cpu"
 		self.predictor = DefaultPredictor(self.cfg)
 
 	def onimage(self, imagePath):
