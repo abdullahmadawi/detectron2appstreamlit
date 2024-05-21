@@ -714,8 +714,8 @@ class Detector:
 	def __init__(self, model_type='box'):
 		pretrained_model = 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml'
 		self.cfg = get_cfg()
-		self.cfg.merge_from_file(model_zoo.get_config_file(pretrained_model))
-		self.cfg.MODEL.WEIGHTS = os.path.join(self.cfg.OUTPUT_DIR, "tree_detection_small.yaml")
+		self.cfg.merge_from_file("tree_detection_small.yaml")
+		self.cfg.MODEL.WEIGHTS = "default_model_final.path"
 		self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
 		self.cfg.MODEL.DEVICE = "cpu"
 		self.predictor = DefaultPredictor(self.cfg)
