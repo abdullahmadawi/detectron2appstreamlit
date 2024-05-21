@@ -5,7 +5,7 @@ Import libraries
 '''
 #	Import some common libraries
 import os, sys, json, cv2, shutil, datetime, time
-import numpy as np; import pandas as pd; import geopandas as gpd
+import numpy as np; import geopandas as gpd
 import matplotlib.image as mpimg
 
 
