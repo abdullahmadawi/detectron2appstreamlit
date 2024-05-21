@@ -3,6 +3,15 @@
 Import libraries
 ###########################################################################
 '''
+
+
+try:
+    from detectron2.config import get_cfg  
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'git+https://github.com/facebookresearch/detectron2.git'])
+
 #	Import some common libraries
 import os, sys, json, cv2, shutil, datetime, time
 import numpy as np; import geopandas as gpd
